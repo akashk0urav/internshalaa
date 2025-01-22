@@ -15,7 +15,7 @@ def student_signup_views(request):
         if len(password)<6:
             messages.error(request,"password must we greater then 6 charactor")
             return redirect('student_signup')
-        if User.objects.filter(email).exists():
+        if User.objects.filter(username=email).exists():
             messages.error(request,"this email allready register")
             return redirect('student_signup')
         user=User.objects.create_user(
@@ -25,9 +25,9 @@ def student_signup_views(request):
             password=password
         )
         user.save()
-        messages.error(request,"Employer account created successfully! Please log in.")
+        messages.success(request,"Student account created successfully! Please log in.")
         return redirect('student_login')
-    return render(request,'student_signup')
+    return render(request,'student_signup.html')
 
 def employer_signup_views(request):
     if request.method=='POST':
@@ -39,7 +39,7 @@ def employer_signup_views(request):
         if len(password)<6:
             messages.error(request,"password must we greater then 6 charactor")
             return redirect('employer_signup')
-        if User.objects.filter(email).exists():
+        if User.objects.filter(username=email).exists():
             messages.error(request,"this email allready register")
             return redirect('employer_signup')
         user=User.objects.create_user(
@@ -49,18 +49,10 @@ def employer_signup_views(request):
             password=password
         )
         user.save()
-        messages.error(request,"Employer account created successfully! Please log in.")
+        messages.success(request,"Employer account created successfully! Please log in.")
         return redirect('employer_login')
     return render(request,'employer_signup.html')
 
-def student_dashboard(request):
-    return render(request,'student_dashboard.html')
-
-def employer_dashboard(request):
-    return render(request,'employer_dashboard.html')
-
-def landing_dashboard_views(request):
-    return render(request,'landing_dashboard.html')
 
 def student_login_views(request):
     if request.method == 'POST':

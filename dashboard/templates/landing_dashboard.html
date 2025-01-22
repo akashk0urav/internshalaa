@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Dashboard</title>
+</head>
+<body>
+    <h2>Welcome to the Dashboard</h2>
+
+    <div>
+        <h3>Login</h3>
+        <p><a href="{% url 'student_login' %}">Student Login</a></p>
+        <p><a href="{% url 'employer_login' %}">Employer Login</a></p>
+    </div>
+
+    <div>
+        <h3>Signup</h3>
+        <p><a href="{% url 'student_signup' %}">Student Signup</a></p>
+        <p><a href="{% url 'employer_signup' %}">Employer Signup</a></p>
+    </div>
+</body>
+</html>
