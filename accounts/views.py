@@ -1,4 +1,4 @@
-from django.shortcuts import render ,redirect
+from django.shortcuts import render ,redirect ,HttpResponse
 from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -51,6 +51,49 @@ def employer_signup_views(request):
         user.save()
         messages.error(request,"Employer account created successfully! Please log in.")
         return redirect('employer_login')
-    return render(request,'employer_signup')
+    return render(request,'employer_signup.html')
 
+def student_dashboard(request):
+    return render(request,'student_dashboard.html')
 
+def employer_dashboard(request):
+    return render(request,'employer_dashboard.html')
+
+def landing_dashboard_views(request):
+    return render(request,'landing_dashboard.html')
+
+def student_login_views(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+
+        user = authenticate(request, username=email, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('student_dashboard')  # Redirect to the student's dashboard
+        else:
+            messages.error(request, 'Invalid email or password.')
+            return redirect('student_login')
+
+    return render(request, 'student_login.html')
+
+# Employer Login View
+def employer_login_views(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+
+        user = authenticate(request, username=email, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('employer_dashboard')  # Redirect to the employer's dashboard
+        else:
+            messages.error(request, 'Invalid email or password.')
+            return redirect('employer_login')
+
+    return render(request, 'employer_login.html')
+
+# Logout View (shared)
+def user_logout(request):
+    logout(request)
+    return redirect('landing_dashboard')
